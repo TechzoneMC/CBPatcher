@@ -1,0 +1,37 @@
+<project>
+    <modelVersion>4.0.0</modelVersion> 
+    <parent>
+        <groupId>net.techcable</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.4</version>
+    </parent>
+    <artifactId>cbpatcher</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <description>Allows you to overide java classes at runtime. Primarily designed for craftbukkit, but usable from any application</description>
+    <dependencies>
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.19.0-GA</version>
+        </dependency>
+        <dependency>
+            <groupId>tk.ivybits</groupId>
+            <artifactId>agent</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.ow2.asm</groupId>
+                    <artifactId>asm</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <!-- Please remember to keep bukkit optional as this should be able to be used for any app -->
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.8-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+</project>

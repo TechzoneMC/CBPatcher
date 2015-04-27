@@ -1,0 +1,5 @@
+name: CBPatcher
+version: 1.0.0-SNAPSHOT
+main: net.techcable.cbpatcher.BukkitCBPatcher
+authors:
+  - Techcable
