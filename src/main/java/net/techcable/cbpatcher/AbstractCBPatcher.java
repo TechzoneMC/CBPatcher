@@ -24,7 +24,7 @@ import java.util.*;
  */
 public abstract class AbstractCBPatcher implements ClassFileTransformer {
     protected abstract File getNativeDir();
-    public void tranformAll() {
+    public void transformAll() {
         try {
             Tools.CACHE_DIR = getNativeDir().getAbsolutePath();
             Tools.loadAgentLibrary();
@@ -66,6 +66,10 @@ public abstract class AbstractCBPatcher implements ClassFileTransformer {
         }
     }
 
+    private final Set<ClassTransformListener> transformListeners = new HashSet<>();
+    public void addTransformListener(ClassTransformListener transformListener) {
+        transformListeners.add(transformListener);
+    }
     /**
      * This method should not be called from outside code
      *
@@ -110,6 +114,9 @@ public abstract class AbstractCBPatcher implements ClassFileTransformer {
                     log("Unable to inject %s from %s into %s", newMethod.getLongName(), newMethod.getDeclaringClass().getName(), clazz.getName());
                     logStack(e);
                 }
+            }
+            for (ClassTransformListener listener : transformListeners) {
+                listener.onTransform(clazz);
             }
             try {
                 byte[] bytecode = clazz.toBytecode();

@@ -29,7 +29,18 @@ public class BukkitCBPatcher extends JavaPlugin {
         if (plugin.setup) {
             plugin.getLogger().warning("A plugin has registered a injector after the plugin has been loaded");
             plugin.getLogger().warning("This will reduce performance");
-            patcher.tranformAll();
+            patcher.transformAll();
+        }
+    }
+
+    public static void addTransformListener(ClassTransformListener listener) {
+        BukkitCBPatcher plugin = getPlugin(BukkitCBPatcher.class);
+        AbstractCBPatcher patcher = plugin.patcher;
+        patcher.addTransformListener(listener);
+        if (plugin.setup) {
+            plugin.getLogger().warning("A plugin has registered an injection listener after startup");
+            plugin.getLogger().warning("This will reduce performance");
+            patcher.transformAll();
         }
     }
 
@@ -37,7 +48,7 @@ public class BukkitCBPatcher extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        patcher.tranformAll();
+        patcher.transformAll();
         setup = true;
     }
 }
